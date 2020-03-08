@@ -1,25 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
-
-import './questao.dart';
-import './resposta.dart';
+import './questionario.dart';
 
 //main() {
 //  runApp(new PerguntaApp());
 //}
-
-class RandomWordsState extends State<RandomWords> {
-  @override
-  Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return Text(wordPair.asPascalCase);
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  RandomWordsState createState() => RandomWordsState();
-}
 
 main() => runApp(PerguntaApp());
 
@@ -47,48 +31,40 @@ class _PerguntaAppState extends State<PerguntaApp> {
     });
   }
 
-  // Pra n permitir q ultrapasse o tamanho da lista de perguntas
   bool get temPerguntaSelecionada {
     return _indicePergunta < _perguntas.length;
   }
 
   @override //Sobrescrevendo obrigatoriamente o metodo builder
   Widget build(BuildContext context) {
-    List<String> respostas =
-        temPerguntaSelecionada ? _perguntas[_indicePergunta]['resposta'] : null;
-
     // for (var textoResp in respostas) {
     //   widgetsRespostas.add(Resposta(textoResp, _responder));
     // }
     //final wordPair = WordPair.random();
 
     return MaterialApp(
-      // O scafold é um widget
-      // Scaffold significa estrutura
-      home: Scaffold(
-        // O appbar é um widget
-        appBar: AppBar(
-          //n poderiamos fazer title: 'titulo aqui' pq é uma string e n o widget
-          title: Text('Perguntas'),
-        ),
-        body: temPerguntaSelecionada
-            ? Column(
-                children: <Widget>[
-                  Questao(_perguntas[_indicePergunta]['pergunta']),
-                  ...respostas.map((t) => Resposta(t, _responder)).toList(),
-                ],
-              )
-            : Center(
-                child:
-                    //child: Text(
-                    RandomWords(),
-                //   style: TextStyle(
-                //     fontSize: 22,
-                //   ),
-              ),
-        //),
+        // O scafold é um widget
+        // Scaffold significa estrutura
+        home: Scaffold(
+      // O appbar é um widget
+      appBar: AppBar(
+        //n poderiamos fazer title: 'titulo aqui' pq é uma string e n o widget
+        title: Text('Perguntas'),
       ),
-    );
+      body: temPerguntaSelecionada
+          ? Questionario(
+              perguntas: _perguntas,
+              indicePergunta: _indicePergunta,
+              responder: _responder)
+          : Center(
+              child: Text(
+                'Acabaram as Perguntas',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
+              ),
+            ),
+    ));
   }
 }
 
