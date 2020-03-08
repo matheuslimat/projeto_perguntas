@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 import './questao.dart';
 import './resposta.dart';
@@ -6,6 +7,19 @@ import './resposta.dart';
 //main() {
 //  runApp(new PerguntaApp());
 //}
+
+class RandomWordsState extends State<RandomWords> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+    return Text(wordPair.asPascalCase);
+  }
+}
+
+class RandomWords extends StatefulWidget {
+  @override
+  RandomWordsState createState() => RandomWordsState();
+}
 
 main() => runApp(PerguntaApp());
 
@@ -46,6 +60,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
     // for (var textoResp in respostas) {
     //   widgetsRespostas.add(Resposta(textoResp, _responder));
     // }
+    //final wordPair = WordPair.random();
 
     return MaterialApp(
       // O scafold é um widget
@@ -64,13 +79,14 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 ],
               )
             : Center(
-                child: Text(
-                  'As perguntas acabaram!',
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
+                child:
+                    //child: Text(
+                    RandomWords(),
+                //   style: TextStyle(
+                //     fontSize: 22,
+                //   ),
               ),
+        //),
       ),
     );
   }
